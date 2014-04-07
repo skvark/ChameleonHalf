@@ -1,0 +1,26 @@
+Name: harbour-chameleon
+Summary: Chameleon
+Version: 0.1
+Release: 1
+Group: Qt/Qt
+URL: http://example.org/
+License: LICENSE
+Sources:
+- '%{name}-%{version}.tar.bz2'
+Description: |
+  Chameleon half controller
+Configure: none
+Builder: qtc5
+PkgConfigBR:
+- Qt5Quick
+- Qt5Qml
+- Qt5Core
+- sailfishapp >= 0.0.10
+Requires:
+- sailfishsilica-qt5 >= 0.10.9
+Files:
+- /usr/bin
+- /usr/share/harbour-chameleon
+- /usr/share/applications
+- /usr/share/icons/hicolor/86x86/apps
+PkgBR: []
