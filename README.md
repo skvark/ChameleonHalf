@@ -17,4 +17,4 @@ Links
 =====
 
 * [Fading & app demo video](https://vimeo.com/91090091)
-* [talk.maemo.org thread](http://talk.maemo.org/showthread.php?t=92754&page=3)
+* [talk.maemo.org thread](http://talk.maemo.org/showthread.php?t=92754)
