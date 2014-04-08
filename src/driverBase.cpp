@@ -26,26 +26,23 @@ bool DriverBase::i2cWrite(int file, char buffer[], int buffer_length)
         qDebug() << "Write failed.";
         return false;
     }
-    qDebug() << "Write successful.";
+    qDebug() << "Write successfull.";
     return true;
 }
 
-// address: slave device adress in hex
-// bytes: QList of hex formatted QStrings ("bytes"), each value must be one byte
-bool DriverBase::writeBytes(unsigned char address, QList<QString> bytes)
+bool DriverBase::i2cRead(int file, char buffer[], int howManyBytesToRead)
 {
-    char buffer[20];
-    bool ok;
-
-    // convert QStrings to hex
-    for (int i = 0; i < bytes.length(); ++i) {
-        QString temp = bytes[i];
-        buffer[i] = temp.toInt(&ok, 16);
-        if (!ok) {
-            return false;
-        }
+    if (read(file, buffer, howManyBytesToRead) != howManyBytesToRead) {
+       close(file);
+       qDebug() << "Read failed.";
+       return false;
     }
+    qDebug() << "Read successfull.";
+    return true;
+}
 
+bool DriverBase::writeBytes(unsigned char address, char bytes[], int length)
+{
     // try to open the device
     int file = openDeviceFile("/dev/i2c-1");
 
@@ -53,7 +50,7 @@ bool DriverBase::writeBytes(unsigned char address, QList<QString> bytes)
         // set slave address
         if (setSlaveAddress(file, address)) {
             // try to perform the actual write
-            if (i2cWrite(file, buffer, bytes.length())) {
+            if (i2cWrite(file, bytes, length)) {
                 close(file);
                 return true;
             }
@@ -63,21 +60,44 @@ bool DriverBase::writeBytes(unsigned char address, QList<QString> bytes)
     return false;
 }
 
-// To be implemented
-bool DriverBase::readBytes(unsigned char address,
-                           QString registerToRead,
-                           int howManyBytesToRead)
+QByteArray DriverBase::readBytes(unsigned char address, int howManyBytesToRead)
 {
-    qDebug() << "This method is not yet implemeted.";
-    return false;
+    QByteArray result;
+    char buffer[20];
+
+    // try to open the device
+    int file = openDeviceFile("/dev/i2c-1");
+
+    if (file != -1) {
+        // set slave address
+        if (setSlaveAddress(file, address)) {
+            // read from the register
+            if(i2cRead(file, buffer, howManyBytesToRead)) {
+                // convert to QByteArray
+                close(file);
+                for(int i = 0; i < howManyBytesToRead; ++i) {
+                    result.append(buffer[i]);
+                }
+                return result;
+            }
+        }
+    }
+    // return empty QList in case of failure
+    return result;
 }
 
-bool DriverBase::writeThenRead(unsigned char address,
-                               QList<QString> bytes,
-                               int howManyBytesToRead)
-{
-    qDebug() << "This method is not yet implemeted.";
-    return false;
+QByteArray DriverBase::writeThenRead(unsigned char address,
+                                     char registerToRead,
+                                     int howManyBytesToRead) {
+
+    QByteArray result;
+    char reg[1];
+    reg[0] = registerToRead;
+
+    if (writeBytes(address, reg, 1)) {
+        result = readBytes(address, howManyBytesToRead);
+    }
+    return result;
 }
 
 

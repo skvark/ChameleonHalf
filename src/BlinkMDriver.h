@@ -4,9 +4,10 @@
 #include <QColor>
 #include <driverBase.h>
 
-// commands
-const QString fadetorgb = "63";
-const QString stopscript = "6f";
+namespace {
+    const unsigned char fadetorgb = 0x63;
+    unsigned char stopscript = 0x6f;
+}
 
 class BlinkMDriver: public DriverBase
 {
@@ -24,6 +25,7 @@ signals:
 
 private:
     unsigned char blinkmAddress_;
+    void convertQColorComponentsToCharArray(QColor color, char bytes[]);
 };
 
 

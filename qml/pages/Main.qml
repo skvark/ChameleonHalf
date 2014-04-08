@@ -23,6 +23,11 @@ Page
                 title: "Chameleon Half"
             }
 
+            Button {
+               text: "Get color sensor id."
+               onClicked: controller.getID()
+            }
+
             Label {
                 width: parent.width
                 text: "Choose color"

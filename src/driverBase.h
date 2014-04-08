@@ -6,29 +6,28 @@
 #include <fcntl.h>
 #include <QDebug>
 #include <QObject>
+#include <QByteArray>
 
 class DriverBase : public QObject {
 
 public:
 
     // write given bytes to specified address
-    bool writeBytes(unsigned char address,
-                    QList<QString> bytes);
+    bool writeBytes(unsigned char address, char bytes[], int length);
 
-    // read specified amount of bytes from a register
-    bool readBytes(unsigned char address,
-                   QString registerToRead,
-                   int howManyBytesToRead);
+    // read specified amount of bytes
+    QByteArray readBytes(unsigned char address, int howManyBytesToRead);
 
-    // first write bytelist and then read
-    bool writeThenRead(unsigned char address,
-                       QList<QString> bytes,
-                       int howManyBytesToRead);
+    // first write the register from which to read and then read
+    QByteArray writeThenRead(unsigned char address,
+                             char registerToRead,
+                             int howManyBytesToRead);
 
 private:
     int openDeviceFile(const char *name);
     bool setSlaveAddress(int file, unsigned char address);
     bool i2cWrite(int file, char buffer[], int buffer_length);
+    bool i2cRead(int file, char buffer[], int howManyBytesToRead);
 };
 
 #endif // DRIVERBASE_H

@@ -25,6 +25,7 @@ public:
     Q_INVOKABLE QColor getColor();
     Q_INVOKABLE void setColor(QColor color);
     Q_INVOKABLE void setChameleonMode(bool onOff);
+    Q_INVOKABLE void getID();
 
     void disableScript();
 

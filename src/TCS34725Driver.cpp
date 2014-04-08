@@ -10,4 +10,9 @@ TCS34725Driver::~TCS34725Driver()
 
 }
 
-// Nothing implemented yet :D
+void TCS34725Driver::getID()
+{
+    QByteArray result = writeThenRead(TCS34725Address_, ID, 1);
+    qDebug() << QString(result.toHex());
+}
+

@@ -4,6 +4,11 @@
 #include <QString>
 #include <driverBase.h>
 
+namespace {
+    const char command_byte = 0x80;
+    const char ID = command_byte | 0x12;
+}
+
 class TCS34725Driver: public DriverBase
 {
     Q_OBJECT
@@ -15,12 +20,11 @@ public:
     QColor getColor();
     // this enables or disables the onboard led
     void setInterrupt(bool state);
+    void getID();
 
 signals:
 
 private:
-    void write(unsigned char TCS34725_register, QString data);
-    void read(unsigned char TCS34725_register, unsigned int howManyBytesToRead);
     unsigned char TCS34725Address_;
 
 };

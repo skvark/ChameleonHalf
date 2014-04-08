@@ -38,6 +38,11 @@ void Controller::setChameleonMode(bool onOff)
     return;
 }
 
+void Controller::getID()
+{
+    TCS34725Driver_->getID();
+}
+
 void Controller::changeColor()
 {
     return;
