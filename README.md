@@ -12,3 +12,9 @@ VDD is set automatically upon application startup. When the application is close
 Current version supports only BlinkM's fadeToRGBColor method. Automatic color changing via the Flora color sensor will be added later. I'll probably modify this later into a daemon which communicates with another app via dbus.
 
 To test: Connect Jolla's 3,3 V to blinkM +, GND to -, SCL to SCL and SDA to SDA. Use with caution :)
+
+Links
+=====
+
+* [Fading & app demo video](https://vimeo.com/91090091)
+* [talk.maemo.org thread](http://talk.maemo.org/showthread.php?t=92754)
