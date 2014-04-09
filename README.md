@@ -19,4 +19,5 @@ Links
 =====
 
 * [Fading & app demo video](https://vimeo.com/91090091)
+* [Color sensor polling and fading combined](https://vimeo.com/91553447)
 * [talk.maemo.org thread](http://talk.maemo.org/showthread.php?t=92754)
