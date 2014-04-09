@@ -18,10 +18,10 @@ public:
     ~BlinkMDriver();
 
     void stopScript();
-    void fadeToRGBColor(QColor color);
     void goToRGBColor(QColor color);
 
 public slots:
+    void fadeToRGBColor(QColor color);
 
 signals:
 

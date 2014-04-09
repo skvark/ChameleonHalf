@@ -89,6 +89,11 @@ void TCS34725Driver::clearInterrupt() {
     writeBytes(TCS34725Address_, bytes, 1);
 }
 
+QColor TCS34725Driver::getLastColor()
+{
+    return lastColor_;
+}
+
 void TCS34725Driver::getID()
 {
     QByteArray result = writeThenRead(TCS34725Address_, ID, 1);
@@ -112,5 +117,6 @@ QColor TCS34725Driver::getCurrentColor() {
                          static_cast<quint8>(bluevalue_));
 
     qDebug() << color.toRgb().name();
+    lastColor_ = color;
     return color;
 }

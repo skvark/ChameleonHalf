@@ -1,6 +1,4 @@
 #include <BlinkMDriver.h>
-#include <QCoreApplication>
-
 
 BlinkMDriver::BlinkMDriver(unsigned char blinkmAddress)
 {

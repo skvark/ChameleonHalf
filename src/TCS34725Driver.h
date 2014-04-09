@@ -72,6 +72,7 @@ public:
     void getID();
     QColor getCurrentColor();
     void clearInterrupt();
+    QColor getLastColor();
 
 signals:
 
@@ -81,6 +82,7 @@ private:
     quint16 redvalue_;
     quint16 greenvalue_;
     quint16 bluevalue_;
+    QColor lastColor_;
 
 };
 

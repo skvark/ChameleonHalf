@@ -1,9 +1,9 @@
 #include "controller.h"
-#include <QThread>
 
 Controller::Controller(QObject *parent) :
     QObject(parent)
 {
+    ChameleonMode_ = false;
     VDDstate_ = false;
     // Set 3,3 V on
     setVDD();
@@ -15,6 +15,7 @@ Controller::Controller(QObject *parent) :
     disableScript();
     BlinkMDriver_ = new BlinkMDriver(blinkm);
     TCS34725Driver_ = new TCS34725Driver(tcs);
+    connect(this, SIGNAL(colorChanged(QColor)), BlinkMDriver_, SLOT(fadeToRGBColor(QColor)));
 }
 
 Controller::~Controller()
@@ -24,7 +25,7 @@ Controller::~Controller()
 
 QColor Controller::getColor()
 {
-    return TCS34725Driver_->getCurrentColor();
+    return TCS34725Driver_->getLastColor();
 }
 
 void Controller::setColor(QColor color)
@@ -34,7 +35,24 @@ void Controller::setColor(QColor color)
 
 void Controller::setChameleonMode(bool onOff)
 {
-    return;
+    if (onOff && !ChameleonMode_) {
+        qDebug() << "start";
+
+        ChameleonMode_ = true;
+        thread_ = new QThread;
+        poller_ = new ColorPoller(TCS34725Driver_);
+        poller_->moveToThread(thread_);
+        connect(poller_, SIGNAL(newColor(QColor)), this, SLOT(changeColor(QColor)), Qt::DirectConnection);
+        connect(thread_, SIGNAL(finished()), thread_, SLOT(deleteLater()));
+        thread_->start();
+
+    } else if (!onOff && ChameleonMode_) {
+        qDebug() << "stop";
+
+        delete poller_;
+        thread_->quit();
+        ChameleonMode_ = false;
+    }
 }
 
 void Controller::getID()
@@ -42,9 +60,11 @@ void Controller::getID()
     TCS34725Driver_->getID();
 }
 
-void Controller::changeColor()
+void Controller::changeColor(QColor color)
 {
-    return;
+    qDebug() << "color changed";
+    emit colorChanged(color);
+    emit colorDetected(color);
 }
 
 void Controller::disableScript()

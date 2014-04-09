@@ -16,13 +16,15 @@ SOURCES += src/harbour-chameleon.cpp \
     src/BlinkMDriver.cpp \
     src/TCS34725Driver.cpp \
     src/controller.cpp \
-    src/driverBase.cpp
+    src/driverBase.cpp \
+    src/colorPoller.cpp
 	
 HEADERS += \
     src/BlinkMDriver.h \
     src/TCS34725Driver.h \
     src/controller.h \
-    src/driverBase.h
+    src/driverBase.h \
+    src/colorPoller.h
 
 OTHER_FILES += qml/harbour-chameleon.qml \
     qml/cover/CoverPage.qml \

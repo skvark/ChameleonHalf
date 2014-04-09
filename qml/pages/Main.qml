@@ -23,9 +23,17 @@ Page
 
             Button {
                anchors.horizontalCenter: parent.horizontalCenter
-               text: "Get color."
+               text: "Start Chameleon"
                onClicked: {
-                   bg.color = controller.getColor()
+                   controller.setChameleonMode(true)
+               }
+            }
+
+            Button {
+               anchors.horizontalCenter: parent.horizontalCenter
+               text: "Stop Chameleon"
+               onClicked: {
+                   controller.setChameleonMode(false)
                }
             }
 
@@ -72,6 +80,12 @@ Page
                 }
             }
 
+        }
+    }
+    Connections {
+        target: controller
+        onColorDetected: {
+            bg.color = newcolor;
         }
     }
 }
