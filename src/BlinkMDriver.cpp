@@ -29,6 +29,15 @@ void BlinkMDriver::fadeToRGBColor(QColor color)
     writeBytes(blinkmAddress_, bytes, 4);
 }
 
+// Go to RGB Color: {‘n’, R, G, B}
+void BlinkMDriver::goToRGBColor(QColor color)
+{
+    char bytes[4];
+    bytes[0] = gotorgb;
+    convertQColorComponentsToCharArray(color, bytes);
+    writeBytes(blinkmAddress_, bytes, 4);
+}
+
 void BlinkMDriver::convertQColorComponentsToCharArray(QColor color, char bytes[]) {
 
     QColor RGB = color.toRgb();

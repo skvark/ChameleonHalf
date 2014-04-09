@@ -5,11 +5,9 @@ import Sailfish.Silica 1.0
 Page
 {
     id: mainPage
-
     SilicaFlickable
     {
         anchors.fill: parent
-
         contentHeight: column.height
 
         Column
@@ -24,8 +22,24 @@ Page
             }
 
             Button {
-               text: "Get color sensor id."
-               onClicked: controller.getID()
+               anchors.horizontalCenter: parent.horizontalCenter
+               text: "Get color."
+               onClicked: {
+                   bg.color = controller.getColor()
+               }
+            }
+
+            Rectangle {
+                id: bg
+                width: parent.width
+                height: 80
+                Label {
+                    id: colorlabel
+                    height: 40
+                    text: "TESTCOLOR"
+                    width: parent.width
+                    horizontalAlignment: Text.AlignHCenter
+                }
             }
 
             Label {

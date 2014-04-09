@@ -6,7 +6,8 @@
 
 namespace {
     const unsigned char fadetorgb = 0x63;
-    unsigned char stopscript = 0x6f;
+    const unsigned char gotorgb = 0x6e;
+    const unsigned char stopscript = 0x6f;
 }
 
 class BlinkMDriver: public DriverBase
@@ -18,6 +19,7 @@ public:
 
     void stopScript();
     void fadeToRGBColor(QColor color);
+    void goToRGBColor(QColor color);
 
 public slots:
 

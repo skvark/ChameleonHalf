@@ -4,10 +4,7 @@
 Controller::Controller(QObject *parent) :
     QObject(parent)
 {
-    BlinkMDriver_ = new BlinkMDriver(blinkm);
-    TCS34725Driver_ = new TCS34725Driver(tcs);
     VDDstate_ = false;
-
     // Set 3,3 V on
     setVDD();
     // Wait for stabile power - this is hacky and makes app to start delayed.
@@ -16,6 +13,8 @@ Controller::Controller(QObject *parent) :
     // Disable any preprogrammed scripts from blinkm,
     // other commands won't go trough otherwise.
     disableScript();
+    BlinkMDriver_ = new BlinkMDriver(blinkm);
+    TCS34725Driver_ = new TCS34725Driver(tcs);
 }
 
 Controller::~Controller()
@@ -25,7 +24,7 @@ Controller::~Controller()
 
 QColor Controller::getColor()
 {
-    return QColor();
+    return TCS34725Driver_->getCurrentColor();
 }
 
 void Controller::setColor(QColor color)
